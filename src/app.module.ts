@@ -7,9 +7,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ChatController } from './chat/chat.controller';
 import { ChatModule } from './chat/chat.module';
 import { FriendsModule } from './friends/friends.module';
+import { FileModule } from './file/file.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UsersModule, AuthModule, MongooseModule.forRoot('mongodb://localhost/cv_dev'), ChatModule, FriendsModule],
+  imports: [UsersModule, AuthModule, MongooseModule.forRoot(process.env.DATABASE_URI), ChatModule, FriendsModule, FileModule],
   controllers: [AppController, ChatController],
   providers: [AppService],
 })

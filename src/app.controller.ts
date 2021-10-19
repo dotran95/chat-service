@@ -1,8 +1,9 @@
 import { Controller, Get, Post, UseGuards, Request, Body } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiOkResponse, ApiResponse, ApiResponseProperty } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
-import { AutoDTO } from './auth/dto/Auth.dto';
+import { AuthDTO } from './auth/dto/Auth.dto';
+import { SignInResponseDTO } from './auth/dto/sign-in-response.dto';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { CreateUserDTO } from './users/dto/create-user.dto';
 
@@ -17,13 +18,14 @@ export class AppController {
 
   @UseGuards(LocalAuthGuard)
   @Post('sign-in')
-  @ApiOkResponse({ status: 200, description: 'Successfully.' })
+  @ApiOkResponse({ status: 200, description: 'Successfully.', type: SignInResponseDTO })
   @ApiResponse({ status: 400, description: 'Failed.' })
   @ApiBody({
     description: 'Loggin',
-    type: AutoDTO,
+    type: AuthDTO,
   })
   async signIn(@Request() req) {
+    return "Helo"
     return this.authService.login(req.user);
   }
 

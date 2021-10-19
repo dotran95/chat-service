@@ -31,7 +31,7 @@ export class FriendsService {
                 return true;
             }
         } catch (error) {
-            throw error;
+            throw new HttpException('Server error', StatusCodes.fail);
         }
 
         throw new HttpException('User not found', StatusCodes.fail)

@@ -1,7 +1,7 @@
 import { IsString, MaxLength, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class AutoDTO {
+export class AuthDTO {
 
     @ApiProperty({ minLength: 4, maxLength: 20, required: true, type: String })
     @IsString()
