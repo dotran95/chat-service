@@ -1,6 +1,6 @@
 import { HttpException, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { get } from 'lodash';
+import _, { get } from 'lodash';
 import { Model, Types } from 'mongoose';
 import { StatusCodes } from 'src/constants';
 import { CreateUserDTO } from './dto/create-user.dto';
@@ -33,5 +33,23 @@ export class UsersService {
         }
 
         throw new HttpException("User not found", StatusCodes.fail);
+    }
+
+    async search(name: string, page: number, limit: number): Promise<Profile[]> {
+        this.logger.log(name + 'dasdasdsa')
+        try {
+            let users: any[] = [];
+            if (name.length === 0) {
+                users = await this.userModel.find().limit(limit).skip(page * limit);
+            } else {
+                users = await this.userModel.find({ fullname: { $regex: name, $options: 'i' } }).limit(limit).skip(page * limit);
+            }
+            return users.map(user => {
+                return { userId: get(user, "_id", ""), fullname: get(user, "fullname", ""), avatar: get(user, "avatar", null) }
+            })
+
+        } catch (error) {
+            throw error;
+        }
     }
 }
