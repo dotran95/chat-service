@@ -36,7 +36,6 @@ export class UsersService {
     }
 
     async search(name: string, page: number, limit: number): Promise<Profile[]> {
-        this.logger.log(name + 'dasdasdsa')
         try {
             let users: any[] = [];
             if (name.length === 0) {
